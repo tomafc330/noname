@@ -1,0 +1,29 @@
+{
+  "name": "plugin name",
+  "version": "0",
+  "description": "What do I do as an extension",
+  "background": {"page": "background.html"},
+  "manifest_version": 2,
+  "content_scripts": [
+    {
+      "js": [ "jquery.min.js", "background.js" ],
+      "css": ["customStyles.css"],
+      "matches": [ "http://www.youtube.com/*"]
+    }
+  ],
+  "browser_action": {
+    "name": "Manipulate DOM",
+    "icons": ["icon.png"],
+    "default_icon": "icon.png"
+  },
+
+  
+  "permissions": ["<all_urls>"]
+  
+  // "web_accessible_resources":["jquery-2.0.2.min.js"],
+  // "content_scripts": [ {
+  //   "js": [ "jquery-2.0.2.min.js", "background.js" ],
+  //   "css": ["customStyles.css"],
+  //   "matches": [ "http://*/*", "https://*/*"]
+  // }]
+}

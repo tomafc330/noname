@@ -1,0 +1,52 @@
+/*  Read about this page here: https://developer.chrome.com/extensions/content_scripts.html */
+
+#testingCode{
+	font-size: 5em;
+}
+
+.text{
+	width:500px;
+	border:1px solid black;
+}
+
+.danmaku {
+	position: absolute;
+	display: inline-block;
+	color: black;
+	left:1000px;
+	height:0px;
+	font-size: 1.4em;
+	font-family: arial;
+	font-weight: 700;
+	z-index: 10000000;
+}
+
+.msg-frame{
+  display: block;
+  float: left;
+  min-height: 2em;
+  background: white;
+  border-radius: 1.6em;
+  margin:1em; 
+  background: linear-gradient(90deg, rgba(51,51,51,1), rgba(51,51,51,0.03)); 
+  margin-top: -3em;
+  -webkit-transition: 0.3s linear all;
+}
+
+.msg-frame img{
+  width:2em;
+  float: left;
+  margin:0; 
+  z-index: 999;
+  border: 0.2em solid rgb(153,237,46);
+  border-radius: 1.6em;
+}
+
+.msg-content{
+  float: left;
+  margin: 0em 0.4em -1em 0.2em;
+  color: white;
+  font-size: 1.5em;
+  font-family: arial;
+  font-weight: 300;
+}
