@@ -8,7 +8,7 @@
     {
       "js": [ "jquery.min.js", "background.js" ],
       "css": ["customStyles.css"],
-      "matches": [ "http://www.youtube.com/*"]
+      "matches": [ "http://www.youtube.com/*","https://www.youtube.com/*"]
     }
   ],
   "browser_action": {
