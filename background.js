@@ -12,7 +12,7 @@ for (i=0;i<40;i++){
 var danmaku = "";
 var dmnum = 1;
 var lol,awesome,OMG;
-var jjj = 0;
+var jjj = 23430;
 
 
 function createDemo(){
