@@ -77,6 +77,7 @@ function templateD(textId,count,content){
   return template
 }
 
+
 function inputTemplate(){
   return '<div id="enterText"><form><input type="text" id="textbox" class="text" placeholder="Your danmaku"></p><button id="enter">Enter</button><button id="demo">Play Demo</button></form></div>';
 }
