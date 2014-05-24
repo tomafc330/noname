@@ -70,7 +70,7 @@ $("#enter").click(function(){
 });
 
 function templateD(textId,count,content){
- var newHTML = '<div class=\"msg-frame danmaku\" id=\"'+newid+'\" style=\"top:'+25*i+'px;\">';
+ var newHTML = '<div class=\"danmaku msg-frame\" id=\"'+newid+'\" style=\"top:'+25*i+'px;\">';
         newHTML+='<img src=\"images/circle-image.png\" alt=\"image\">';
         newHTML+='<p class=\"msg-content\">'+d+'</p>';
         newHTML+='</div>';
