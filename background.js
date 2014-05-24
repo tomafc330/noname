@@ -1,9 +1,11 @@
 //The code that is fired upon page load
 //to check your plugin js is working uncomment the next line.
 
+$("div#player").append(inputTemplate());
+$(document).unbind("keypress.key13");
 $("div#player").css('position','relative');
-console.log('Im here');
-createDemo();
+// console.log('Im here');
+// createDemo();
 
 var position = {};
 for (i=0;i<40;i++){
@@ -12,13 +14,11 @@ for (i=0;i<40;i++){
 var danmaku = "";
 var dmnum = 1;
 var lol,awesome,OMG;
-var jjj = 120;
-
 
 function createDemo(){
 		lol = setInterval(function(){
 			createNewDanmaku("LOOOOOOOOOOOOOOOOL");
-			console.log('created');
+			// console.log('created');
 		}, 1000);
 		awesome = setInterval(function(){
 			createNewDanmaku("awesome");
@@ -35,7 +35,7 @@ function createNewDanmaku(d){
     		position[i]=false;
   	 		var newid="dmnum"+dmnum;
   	 		$("div#player").append("<div class=\"danmaku\" id="+newid+" style=\"top:"+20*i+"px\">"+d+"</div>");
-  	 		// $("div#player").append(templateD(newid.i,d));
+  	 		// $("div#player").append(templateD(newid,i,d));
   			$("#"+newid).animate({left:"-"+$("#"+newid).css("width")},5000,"linear");
   			setTimeout(function(){
   				$("#"+newid).remove()
@@ -47,6 +47,37 @@ function createNewDanmaku(d){
   	    	break;
   		}
   	}	
+}
 
+$("#enter").click(function(){
+      if ($("#textbox").val()!=""){
+          danmaku=$("#textbox").val();
+          createNewDanmaku(danmaku);
+          $("#textbox").val("");
+        }
+    });
+    $("input").keydown(function(e){ 
+      console.log('danmaku');
+      if ($("#textbox").val()!=""){
+        if (e.keyCode == 13){
+          e.preventDefault();
+          e.stopPropagation();
+          danmaku=$("#textbox").val();
+          createNewDanmaku(danmaku);
+          $("#textbox").val("");
+          }
+      }
+});
+
+function templateD(textId,count,content){
+ var newHTML = '<div class=\"msg-frame danmaku\" id=\"'+newid+'\" style=\"top:'+25*i+'px;\">';
+        newHTML+='<img src=\"images/circle-image.png\" alt=\"image\">';
+        newHTML+='<p class=\"msg-content\">'+d+'</p>';
+        newHTML+='</div>';
+  return template
+}
+
+function inputTemplate(){
+  return '<div id="enterText"><form><input type="text" id="textbox" class="text" placeholder="Your danmaku"></p><button id="enter">Enter</button><button id="demo">Play Demo</button></form></div>';
 }
 

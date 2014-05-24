@@ -22,15 +22,18 @@
 }
 
 .msg-frame{
-  display: block;
-  float: left;
   min-height: 2em;
-  background: white;
+  min-width: 200px;
   border-radius: 1.6em;
   margin:1em; 
-  background: linear-gradient(90deg, rgba(51,51,51,1), rgba(51,51,51,0.03)); 
-  margin-top: -3em;
-  -webkit-transition: 0.3s linear all;
+  background-color: #ffffff;
+  z-index: 10000001;
+  /*background: linear-gradient(left, rgba(51,51,51,1), rgba(51,51,51,0.03)); 3*/
+  /*background: -webkit-linear-gradient(left, rgba(51,51,51,1), rgba(51,51,51,0.03));  */
+  /*background: -o-linear-gradient(right, rgba(51,51,51,1), rgba(51,51,51,0.03));  */
+  /*background: -moz-linear-gradient(left, rgba(51,51,51,1), rgba(51,51,51,0.03)); /* For Firefox 3.6 to 15 */
+  /*margin-top: -3em;*/
+  /*-webkit-transition: 0.3s linear all;*/
 }
 
 .msg-frame img{
@@ -45,8 +48,24 @@
 .msg-content{
   float: left;
   margin: 0em 0.4em -1em 0.2em;
-  color: white;
+  color: black;
   font-size: 1.5em;
   font-family: arial;
   font-weight: 300;
+}
+
+#enterText{
+  z-index: 10000000;
+}
+
+#enterText input{
+
+  width: 500px;
+  border: 0.5em solid rgb(153,237,46);
+  border-radius: 2.5em;
+  padding: 15px;
+}
+
+#enterText input[type=text]:focus{
+  outline:none;
 }
