@@ -16,6 +16,7 @@ for (i=0;i<40;i++){
 var danmaku = "";
 var dmnum = 1;
 var lol,awesome,OMG;
+var youtube = new Firebase('https://incandescent-fire-5345.firebaseio.com/video/youtube');
 
 function createDemo(){
 		lol = setInterval(function(){
@@ -66,10 +67,29 @@ $("#enter").click(function(){
           e.stopPropagation();
           danmaku=$("#danmakuTextBox").val();
           createNewDanmaku(danmaku);
+   //        var currentPageUrlIs = "";
+			// if (typeof this.href != "undefined") {
+   //     			currentPageUrlIs = this.href.toString(); 
+			// }else{ 
+   //     			currentPageUrlIs = document.location.toString();
+			// }
+   //        alert(currentPageUrlIs);
+   		var youtubeID = $(".html5-main-video").attr("data-youtube-id");
+   		console.log(youtubeID);
+          saveNewDanmaku(danmaku,document.getElementsByClassName("video-stream html5-main-video")[0].currentTime,youtubeID);
           $("#danmakuTextBox").val("");
           }
       }
 });
+
+function saveNewDanmaku(d,t,url){
+ var thisvideo = youtube.child(url);
+ // var thisdmnum = thisvideo.child('dmnum');
+ thisvideo.push({time:t, text:d});
+ // thisdmnum.transaction(function(current_value) {
+ //          return current_value + 1;
+ //      });
+}
 
 function templateD(newid,count,content){
  var newHTML = '<div class=\"danmaku msg-frame\" id=\"'+newid+'\" style=\"top:'+25*count+'px;\">';
