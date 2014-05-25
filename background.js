@@ -66,16 +66,16 @@ $("#enter").click(function(){
           e.stopPropagation();
           danmaku=$("#danmakuTextBox").val();
           createNewDanmaku(danmaku);
-          $("#textbox").val("");
+          $("#danmakuTextBox").val("");
           }
       }
 });
 
 function templateD(newid,count,content){
  var newHTML = '<div class=\"danmaku msg-frame\" id=\"'+newid+'\" style=\"top:'+25*count+'px;\">';
-        newHTML+='<img src=\"#\" alt=\"image\">';
-        newHTML+='<p class=\"msg-content\">'+content+'</p>';
-        newHTML+='</div>';
+    newHTML+='<img src=\"#\" alt=\"image\">';
+    newHTML+='<p class=\"msg-content\">'+content+'</p>';
+    newHTML+='</div>';
   return newHTML
 }
 
