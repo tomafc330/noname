@@ -6,7 +6,7 @@
   "manifest_version": 2,
   "content_scripts": [
     {
-      "js": [ "jquery.min.js", "background.js", "firebase.js"],
+      "js": [ "jquery.min.js", "firebase.js", "background.js"],
       "css": ["customStyles.css"],
       "matches": [ "http://www.youtube.com/*","https://www.youtube.com/*"]
     }
