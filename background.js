@@ -4,6 +4,8 @@
 $("div#player").append(inputTemplate());
 $(document).unbind("keypress.key13");
 $("div#player").css('position','relative');
+// var chromeUrl = chrome.extension.getUR('images/circle-image.png');
+
 // console.log('Im here');
 // createDemo();
 
@@ -34,11 +36,11 @@ function createNewDanmaku(d){
   		if (position[i]==true){
     		position[i]=false;
   	 		var newid="dmnum"+dmnum;
-  	 		$("div#player").append("<div class=\"danmaku\" id="+newid+" style=\"top:"+20*i+"px\">"+d+"</div>");
-  	 		// $("div#player").append(templateD(newid,i,d));
-  			$("#"+newid).animate({left:"-"+$("#"+newid).css("width")},5000,"linear");
+  	 		// $("div#player").append("<div class=\"danmaku\" id="+newid+" style=\"top:"+20*i+"px\">"+d+"</div>");
+  	 		$("div#player").append(templateD(newid,i,d));
+  			// $("#"+newid).animate({left:"-"+$("#"+newid).css("width")},5000,"linear");
   			setTimeout(function(){
-  				$("#"+newid).remove()
+  				// $("#"+newid).remove()
   			},5000);
   			setTimeout(function(){
   				position[i]=true;
@@ -56,29 +58,29 @@ $("#enter").click(function(){
           $("#textbox").val("");
         }
     });
-    $("input").keydown(function(e){ 
+    $("#danmakuTextBox").keydown(function(e){ 
       console.log('danmaku');
-      if ($("#textbox").val()!=""){
+      if ($("#danmakuTextBox").val()!=""){
         if (e.keyCode == 13){
           e.preventDefault();
           e.stopPropagation();
-          danmaku=$("#textbox").val();
+          danmaku=$("#danmakuTextBox").val();
           createNewDanmaku(danmaku);
           $("#textbox").val("");
           }
       }
 });
 
-function templateD(textId,count,content){
- var newHTML = '<div class=\"danmaku msg-frame\" id=\"'+newid+'\" style=\"top:'+25*i+'px;\">';
-        newHTML+='<img src=\"images/circle-image.png\" alt=\"image\">';
-        newHTML+='<p class=\"msg-content\">'+d+'</p>';
+function templateD(newid,count,content){
+ var newHTML = '<div class=\"danmaku msg-frame\" id=\"'+newid+'\" style=\"top:'+25*count+'px;\">';
+        newHTML+='<img src=\"#\" alt=\"image\">';
+        newHTML+='<p class=\"msg-content\">'+content+'</p>';
         newHTML+='</div>';
-  return template
+  return newHTML
 }
 
 
 function inputTemplate(){
-  return '<div id="enterText"><form><input type="text" id="textbox" class="text" placeholder="Your danmaku"></p><button id="enter">Enter</button><button id="demo">Play Demo</button></form></div>';
+  return '<div id="enterText"><form><input type="text" id="danmakuTextBox" class="text" placeholder="Your danmaku"></p><button id="enter">Enter</button><button id="demo">Play Demo</button></form></div>';
 }
 

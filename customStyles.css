@@ -13,11 +13,11 @@
 	position: absolute;
 	display: inline-block;
 	color: black;
-	left:1000px;
+	left:900px;
 	height:0px;
-	font-size: 1.4em;
-	font-family: arial;
-	font-weight: 700;
+	/*font-size: 1.4em;*/
+	/*font-family: arial;*/
+	/*font-weight: 700;*/
 	z-index: 10000000;
 }
 
