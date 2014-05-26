@@ -69,7 +69,11 @@ function createNewDanmakuWithTime(d,t){
         document.getElementsByClassName("video-stream html5-main-video")[0].removeEventListener('timeupdate',myhandler,false);
     }
   }
+  function myhandler2(){
+    document.getElementsByClassName("video-stream html5-main-video")[0].addEventListener("timeupdate", myhandler, false);    
+  }
   document.getElementsByClassName("video-stream html5-main-video")[0].addEventListener("timeupdate", myhandler, false);
+  document.getElementsByClassName("video-stream html5-main-video")[0].addEventListener("seeked", myhandler2, false);
 }
 
 $("#enter").click(function(){
