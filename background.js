@@ -11,7 +11,7 @@ $("div#player").css('position','relative');
 
 var position = {};
 for (i=0;i<40;i++){
- 	position[i] = true;
+  position[i] = true;
 };
 var danmaku = "";
 var dmnum = 1;
@@ -21,45 +21,55 @@ var youtubeID = $(".html5-main-video").attr("data-youtube-id");
 var thisvideo = youtube.child(youtubeID);
 
 function createDemo(){
-		lol = setInterval(function(){
-			createNewDanmaku("LOOOOOOOOOOOOOOOOL");
-			// console.log('created');
-		}, 1000);
-		awesome = setInterval(function(){
-			createNewDanmaku("awesome");
-		},700);
-		OMG = setInterval(function(){
-			createNewDanmaku("OMG");
-		},877);
-		return;
+    lol = setInterval(function(){
+      createNewDanmaku("LOOOOOOOOOOOOOOOOL");
+      // console.log('created');
+    }, 1000);
+    awesome = setInterval(function(){
+      createNewDanmaku("awesome");
+    },700);
+    OMG = setInterval(function(){
+      createNewDanmaku("OMG");
+    },877);
+    return;
 };
 
 function createNewDanmaku(d){
-	for (var i = 0 ; i < 40 ; i++ ){
-  		if (position[i]==true){
-    		position[i]=false;
-  	 		var newid="dmnum"+dmnum;
-  	 		// $("div#player").append("<div class=\"danmaku\" id="+newid+" style=\"top:"+20*i+"px\">"+d+"</div>");
-  	 		$("div#player").append(templateD(newid,i,d));
-  			// $("#"+newid).animate({left:"-"+$("#"+newid).css("width")},5000,"linear");
-  			setTimeout(function(){
-  				// $("#"+newid).remove()
-  			},5000);
-  			setTimeout(function(){
-  				position[i]=true;
-  			},2000);
-  			dmnum++;
-  	    	break;
-  		}
-  	}	
+  for (var i = 0 ; i < 40 ; i++ ){
+      if (position[i]==true){
+        position[i]=false;
+        var newid="dmnum"+dmnum;
+        // $("div#player").append("<div class=\"danmaku\" id="+newid+" style=\"top:"+20*i+"px\">"+d+"</div>");
+        $("div#player").append(templateD(newid,i,d));
+        // $("#"+newid).animate({left:"-"+$("#"+newid).css("width")},5000,"linear");
+        setTimeout(function(){
+          // $("#"+newid).remove()
+        },5000);
+        setTimeout(function(){
+          position[i]=true;
+        },2000);
+        dmnum++;
+          break;
+      }
+    } 
 }
 
+// function createNewDanmakuWithTime(d,t){
+//  setInterval(function(){
+//    if (Math.abs(document.getElementsByClassName("video-stream html5-main-video")[0].currentTime-t)<0.101){
+//        createNewDanmaku(d);
+//    }
+//  },200);
+// }
+
 function createNewDanmakuWithTime(d,t){
-	setInterval(function(){
-		if (Math.abs(document.getElementsByClassName("video-stream html5-main-video")[0].currentTime-t)<0.101){
-				createNewDanmaku(d);
-		}
-	},200);
+  function myhandler(){
+    if ((Math.abs(document.getElementsByClassName("video-stream html5-main-video")[0].currentTime - t)<0.2) && (document.URL.indexOf($(".html5-main-video").attr("data-youtube-id")) > -1)) {
+        createNewDanmaku(d);
+        document.getElementsByClassName("video-stream html5-main-video")[0].removeEventListener('timeupdate',myhandler,false);
+    }
+  }
+  document.getElementsByClassName("video-stream html5-main-video")[0].addEventListener("timeupdate", myhandler, false);
 }
 
 $("#enter").click(function(){
@@ -78,13 +88,13 @@ $("#enter").click(function(){
           danmaku=$("#danmakuTextBox").val();
           createNewDanmaku(danmaku);
    //        var currentPageUrlIs = "";
-			// if (typeof this.href != "undefined") {
-   //     			currentPageUrlIs = this.href.toString(); 
-			// }else{ 
-   //     			currentPageUrlIs = document.location.toString();
-			// }
+      // if (typeof this.href != "undefined") {
+   //           currentPageUrlIs = this.href.toString(); 
+      // }else{ 
+   //           currentPageUrlIs = document.location.toString();
+      // }
    //        alert(currentPageUrlIs);
-   		console.log(youtubeID);
+      console.log(youtubeID);
           saveNewDanmaku(danmaku,document.getElementsByClassName("video-stream html5-main-video")[0].currentTime,youtubeID);
           $("#danmakuTextBox").val("");
           }
