@@ -20,6 +20,13 @@ var youtube = new Firebase('https://incandescent-fire-5345.firebaseio.com/video/
 var youtubeID = $(".html5-main-video").attr("data-youtube-id");
 var thisvideo = youtube.child(youtubeID);
 
+thisvideo.child('NumOfDanmaku').once('value', function(snapshot) {
+    if (snapshot.val() === null){
+      thisvideo.child('NumOfDanmaku').set(0);
+    }
+});
+
+
 function createDemo(){
     lol = setInterval(function(){
       createNewDanmaku("LOOOOOOOOOOOOOOOOL");
@@ -72,8 +79,8 @@ function createNewDanmakuWithTime(d,t){
   function myhandler2(){
     document.getElementsByClassName("video-stream html5-main-video")[0].addEventListener("timeupdate", myhandler, false);    
   }
-  document.getElementsByClassName("video-stream html5-main-video")[0].addEventListener("timeupdate", myhandler, false);
   document.getElementsByClassName("video-stream html5-main-video")[0].addEventListener("seeked", myhandler2, false);
+  document.getElementsByClassName("video-stream html5-main-video")[0].addEventListener("timeupdate", myhandler, false);
 }
 
 $("#enter").click(function(){
@@ -91,14 +98,6 @@ $("#enter").click(function(){
           e.stopPropagation();
           danmaku=$("#danmakuTextBox").val();
           createNewDanmaku(danmaku);
-   //        var currentPageUrlIs = "";
-      // if (typeof this.href != "undefined") {
-   //           currentPageUrlIs = this.href.toString(); 
-      // }else{ 
-   //           currentPageUrlIs = document.location.toString();
-      // }
-   //        alert(currentPageUrlIs);
-      console.log(youtubeID);
           saveNewDanmaku(danmaku,document.getElementsByClassName("video-stream html5-main-video")[0].currentTime,youtubeID);
           $("#danmakuTextBox").val("");
           }
@@ -107,16 +106,17 @@ $("#enter").click(function(){
 
 thisvideo.on('child_added', function(snapshot) {
   var dmData = snapshot.val();
-  createNewDanmakuWithTime(dmData.text,dmData.time);
+  if (dmData.text !== null){
+    createNewDanmakuWithTime(dmData.text,dmData.time);
+  }
 });
 
 
 function saveNewDanmaku(d,t,url){
- // var thisdmnum = thisvideo.child('dmnum');
- thisvideo.push({time:t, text:d});
- // thisdmnum.transaction(function(current_value) {
- //          return current_value + 1;
- //      });
+  thisvideo.push({time:t, text:d});
+  thisvideo.child('NumOfDanmaku').transaction(function(current_value) {
+        return current_value + 1;
+  });
 }
 
 
