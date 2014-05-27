@@ -19,6 +19,7 @@ var lol,awesome,OMG;
 var youtube = new Firebase('https://incandescent-fire-5345.firebaseio.com/video/youtube');
 var youtubeID = $(".html5-main-video").attr("data-youtube-id");
 var thisvideo = youtube.child(youtubeID);
+var NumOfDanmaku=0;
 
 thisvideo.child('NumOfDanmaku').once('value', function(snapshot) {
     if (snapshot.val() === null){
@@ -106,11 +107,13 @@ $("#enter").click(function(){
 
 thisvideo.on('child_added', function(snapshot) {
   var dmData = snapshot.val();
-  if (dmData.text !== null){
+  if (dmData.text !== undefined){
     createNewDanmakuWithTime(dmData.text,dmData.time);
   }
+  else {
+    $(".video-extras-likes-dislikes").prepend("<span class='danmaku-count'>"+'弹幕数:'+snapshot.val()+"</span>");
+  }
 });
-
 
 function saveNewDanmaku(d,t,url){
   thisvideo.push({time:t, text:d});
