@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>danmaku site</title>
+	<script src="jquery.min.js"></script>
+	<script src="firebase.js"></script>
+  	<script src="firebase-simple-login.js"></script>
+<!-- 	<link rel="stylesheet" type="text/css" href="style.css"> -->
+	<style>
+      body {
+        min-width: 100%;
+        overflow-x: hidden;
+      }
+
+      img {
+        margin: 5px;
+        border: 2px solid black;
+        vertical-align: middle;
+        width: 75px;
+        height: 75px;
+      }
+    </style>
+</head>
+
+
+
+<body>
+	<div align="center">
+		<p>Email: <input type="text" id="emailbox" class="text" width=500px></p>
+		<p>Password: <input type="text" id="passwordbox" class="text" width=500px></p>
+		<button id="CreateUser">Create User</button>
+		<button id="Login">Login</button>
+		<button id="Logout">Logout</button>
+		<p id="errmsg"></p>
+	</div>
+  <script src="popup.js"></script>
+</body>
+
+
+</html>
