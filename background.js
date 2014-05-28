@@ -14,6 +14,7 @@ var position = {};
 for (i=0;i<numOfShooters;i++){
   position[i] = true;
 };
+
 var danmaku = "";
 var dmnum = 1;
 var lol,awesome,OMG;
