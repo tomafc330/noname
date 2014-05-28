@@ -39,9 +39,9 @@ function createNewDanmaku(rawText){
       if (position[i]==true){
         position[i]=false;
         var newid="dmnum"+dmnum;
-        console.log('Length: ',pB.startPositionX);
+        // console.log('Length: ',pB.startPositionX);
         $("div#barrel_"+i).append(templateD(newid,i,pB.cleanText,pB.startPositionX,pB.contentWidth));
-        console.log('STARTING POSITON:-'+(pB.startPositionX,+pB.contentWidth)+'px)');
+        // console.log('STARTING POSITON:-'+(pB.startPositionX,+pB.contentWidth)+'px)');
         setTimeout(function(){
           $("#"+newid).css('-webkit-transition','all '+danmakuSpeed(pB.travelDistanceX)*1000+'ms cubic-bezier(0.000, 0.505, 1.000, 0.585)');
           $("#"+newid).css('-webkit-transform','translate(-'+(pB.travelDistanceX)+'px)');
@@ -49,7 +49,7 @@ function createNewDanmaku(rawText){
                 
         $("#"+newid).one("transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd", function(e){
           $("#"+newid).remove()
-          console.log('finished',e);
+          // console.log('finished',e);
         });
         setTimeout(function(){
           position[i]=true;
@@ -77,7 +77,7 @@ function prepareDanmaku(rawText){
 
   var startingPosition = playerWidth+20;
   var travelDistance = startingPosition+contentWidth;
-  console.log("startingPosition",startingPosition);
+  // console.log("startingPosition",startingPosition);
   var preparedDictionary = {
     startPositionX : startingPosition,
     travelDistanceX : travelDistance,
@@ -93,7 +93,7 @@ function danmakuSpeed(distance){
   //6 = number of seconds of transition
   var speed = 1156/5;
   var newTime = distance/speed;
-  console.log("NEWTIME: ",newTime);
+  // console.log("NEWTIME: ",newTime);
   return newTime;
 }
 
@@ -102,14 +102,14 @@ function createStage(numOfShooters){
 
   for (var i = 0; i < numOfShooters; i++){
     shooterTemplate += '<div class=\"shooters\" id=\"barrel_'+i+'\"></div>'
-      console.log('creating shooters');
+      // console.log('creating shooters');
   }
 
   var stageTemplate = '<div id="danmakuPlayer" id="screen">';
   stageTemplate += shooterTemplate;
   stageTemplate += '</div>';
 
-  console.log('SHOOTER CRAETED: ',stageTemplate);
+  // console.log('SHOOTER CRAETED: ',stageTemplate);
 
   return stageTemplate;
 }
@@ -137,7 +137,7 @@ $("#enter").click(function(){
         }
     });
     $("#danmakuTextBox").keydown(function(e){ 
-      console.log('danmaku');
+      // console.log('danmaku');
       if ($("#danmakuTextBox").val()!=""){
         if (e.keyCode == 13){
           e.preventDefault();
