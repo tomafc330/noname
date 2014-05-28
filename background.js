@@ -98,7 +98,6 @@ $("#enter").click(function(){
           e.preventDefault();
           e.stopPropagation();
           danmaku=$("#danmakuTextBox").val();
-          createNewDanmaku(danmaku);
           saveNewDanmaku(danmaku,document.getElementsByClassName("video-stream html5-main-video")[0].currentTime,youtubeID);
           $("#danmakuTextBox").val("");
           }
