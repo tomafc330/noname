@@ -22,6 +22,7 @@ var auth = new FirebaseSimpleLogin(extRef, function(error, user) {
     $("#Logout").show();
     $("#em").hide();
     $("#pa").hide();
+    $("#rm").hide();
     document.getElementById("Profile").innerHTML = 'You have logged in as: '+user.email;
     document.getElementById("errmsg").innerHTML = '';
   } else {
@@ -33,6 +34,7 @@ var auth = new FirebaseSimpleLogin(extRef, function(error, user) {
     $("#Logout").hide();
     $("#em").show();
     $("#pa").show();
+    $("#rm").show();
     document.getElementById("Profile").innerHTML = '';
     document.getElementById("errmsg").innerHTML = '';
     console.log('logged out');
@@ -76,9 +78,11 @@ $("#Login").click(function(){
     document.getElementById("errmsg").innerHTML = "Please enter password.";
   }
   else {
+    console.log(document.getElementById("myCheck").checked);
     auth.login('password', {
         email: $("#emailbox").val(),
-        password: $("#passwordbox").val()
+        password: $("#passwordbox").val(),
+        rememberMe: document.getElementById("myCheck").checked
     });
   }
 });
