@@ -13,6 +13,7 @@
   /*margin: 60px auto;*/
   overflow: hidden;
   z-index:10000001; 
+  pointer-events:none;
 }
 
 .shooters{
@@ -60,7 +61,7 @@
 
 #enterText{
   position: absolute;
-  top:90%;
+  top:70%;
   left:50%;
   margin-left: -250px; 
   z-index: 10000000;

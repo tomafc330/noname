@@ -179,6 +179,6 @@ function templateD(newid,count,cleanContent,startingPosition,contentWidth){
 }
 
 function inputTemplate(){
-  return '<div id="enterText"><form><input type="text" id="danmakuTextBox" class="text" placeholder="Your danmaku"></p><button id="enter">Enter</button><button id="demo">Play Demo</button></form></div>';
+  return '<div id="enterText"><form><input type="text" id="danmakuTextBox" class="text" placeholder="Your danmaku"></p></form></div>';
 }
 
