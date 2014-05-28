@@ -110,14 +110,16 @@ thisvideo.on('child_added', function(snapshot) {
     createNewDanmakuWithTime(dmData.text,dmData.time);
   }
   else {
-    $(".video-extras-likes-dislikes").prepend("<span class='danmaku-count'>"+'弹幕数:'+snapshot.val()+"</span>");
+    $(".video-extras-likes-dislikes").prepend("<span id='danmaku-count'>"+'弹幕数:'+snapshot.val()+"</span>");
   }
 });
 
 function saveNewDanmaku(d,t,url){
   thisvideo.push({time:t, text:d});
   thisvideo.child('NumOfDanmaku').transaction(function(current_value) {
-        return current_value + 1;
+  		new_value = current_value + 1
+  		document.getElementById("danmaku-count").innerHTML = '弹幕数:'+ new_value;
+        return new_value;
   });
 }
 
