@@ -20,7 +20,8 @@
   },
 
   
-  "permissions": ["<all_urls>"]
+  "permissions": ["<all_urls>"],
+  "web_accessible_resources": ["images/circle-image.png"]
   
   // "web_accessible_resources":["jquery-2.0.2.min.js"],
   // "content_scripts": [ {

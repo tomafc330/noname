@@ -1,16 +1,17 @@
 //The code that is fired upon page load
 //to check your plugin js is working uncomment the next line.
+var numOfShooters = 3;
 
-$("div#player").append(inputTemplate());
+$("html").append(createStage(numOfShooters));
+$("html").append(inputTemplate());
 $(document).unbind("keypress.key13");
-$("div#player").css('position','relative');
-// var chromeUrl = chrome.extension.getUR('images/circle-image.png');
+var playerWidth = $("#danmakuPlayer").width();
+// $("div#player").css('position','relative');
 
-// console.log('Im here');
 // createDemo();
 
 var position = {};
-for (i=0;i<40;i++){
+for (i=0;i<numOfShooters;i++){
   position[i] = true;
 };
 var danmaku = "";
@@ -28,47 +29,90 @@ thisvideo.child('NumOfDanmaku').once('value', function(snapshot) {
 });
 
 
-function createDemo(){
-    lol = setInterval(function(){
-      createNewDanmaku("LOOOOOOOOOOOOOOOOL");
-      // console.log('created');
-    }, 1000);
-    awesome = setInterval(function(){
-      createNewDanmaku("awesome");
-    },700);
-    OMG = setInterval(function(){
-      createNewDanmaku("OMG");
-    },877);
-    return;
-};
 
-function createNewDanmaku(d){
-  for (var i = 0 ; i < 40 ; i++ ){
+function createNewDanmaku(rawText){
+
+  var pB = prepareDanmaku(rawText);
+
+  for (var i = 0 ; i < numOfShooters ; i++ ){
       if (position[i]==true){
         position[i]=false;
         var newid="dmnum"+dmnum;
-        // $("div#player").append("<div class=\"danmaku\" id="+newid+" style=\"top:"+20*i+"px\">"+d+"</div>");
-        $("div#player").append(templateD(newid,i,d));
-        // $("#"+newid).animate({left:"-"+$("#"+newid).css("width")},5000,"linear");
+        console.log('Length: ',pB.startPositionX);
+        $("div#barrel_"+i).append(templateD(newid,i,pB.cleanText,pB.startPositionX,pB.contentWidth));
+        console.log('STARTING POSITON:-'+(pB.startPositionX,+pB.contentWidth)+'px)');
         setTimeout(function(){
-          // $("#"+newid).remove()
-        },5000);
+          $("#"+newid).css('-webkit-transition','all '+danmakuSpeed(pB.travelDistanceX)*1000+'ms cubic-bezier(0.000, 0.505, 1.000, 0.585)');
+          $("#"+newid).css('-webkit-transform','translate(-'+(pB.travelDistanceX)+'px)');
+        },10);  
+                
+        $("#"+newid).one("transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd", function(e){
+          $("#"+newid).remove()
+          console.log('finished',e);
+        });
         setTimeout(function(){
           position[i]=true;
-        },2000);
+        },(danmakuSpeed(pB.contentWidth+150)*1000));
         dmnum++;
           break;
       }
     } 
 }
 
-// function createNewDanmakuWithTime(d,t){
-//  setInterval(function(){
-//    if (Math.abs(document.getElementsByClassName("video-stream html5-main-video")[0].currentTime-t)<0.101){
-//        createNewDanmaku(d);
-//    }
-//  },200);
-// }
+/*
+*准备弹幕的信息
+* - 清洁弹幕
+* - 计算长短
+*/
+function prepareDanmaku(rawText){
+  var cleanedText = rawText.replace(/&/g, "&amp;").replace(/>/g, "&gt;").replace(/</g, "&lt;").replace(/"/g, "&quot;").replace(/ /g,"&nbsp;");//替换 空的，特别符号 成为html
+  var capWords = rawText.match(/\b([A-Z]{2,})\b/g);
+
+  var contentWidth = (rawText.length*13)+70;
+
+  if(capWords){//如果有大写的字把content加长
+    var contentWidth = (rawText.length*18)+70;
+  }
+
+  var startingPosition = playerWidth+20;
+  var travelDistance = startingPosition+contentWidth;
+  console.log("startingPosition",startingPosition);
+  var preparedDictionary = {
+    startPositionX : startingPosition,
+    travelDistanceX : travelDistance,
+    contentWidth : contentWidth,
+    cleanText : cleanedText
+  };
+  return preparedDictionary
+}
+
+//计算弹幕数度。
+function danmakuSpeed(distance){
+  //1152 = starting position for 1 letter 
+  //6 = number of seconds of transition
+  var speed = 1156/5;
+  var newTime = distance/speed;
+  console.log("NEWTIME: ",newTime);
+  return newTime;
+}
+
+function createStage(numOfShooters){
+  var shooterTemplate='';
+
+  for (var i = 0; i < numOfShooters; i++){
+    shooterTemplate += '<div class=\"shooters\" id=\"barrel_'+i+'\"></div>'
+      console.log('creating shooters');
+  }
+
+  var stageTemplate = '<div id="danmakuPlayer" id="screen">';
+  stageTemplate += shooterTemplate;
+  stageTemplate += '</div>';
+
+  console.log('SHOOTER CRAETED: ',stageTemplate);
+
+  return stageTemplate;
+}
+
 
 function createNewDanmakuWithTime(d,t){
   function myhandler(){
@@ -124,14 +168,14 @@ function saveNewDanmaku(d,t,url){
 }
 
 
-function templateD(newid,count,content){
- var newHTML = '<div class=\"danmaku msg-frame\" id=\"'+newid+'\" style=\"top:'+25*count+'px;\">';
-    newHTML+='<img src=\"#\" alt=\"image\">';
-    newHTML+='<p class=\"msg-content\">'+content+'</p>';
+//弹幕的html样本
+function templateD(newid,count,cleanContent,startingPosition,contentWidth){
+   var newHTML = '<div class=\"msg-frame\" id=\"'+newid+'\" style=\"left:'+startingPosition+'px; width:'+contentWidth+'px\">';
+    newHTML+='<img src=\"'+chrome.extension.getURL('/images/circle-image.png')+'\" alt=\"image\">';
+    newHTML+='<p class=\"msg-content\">'+cleanContent+'</p>';
     newHTML+='</div>';
   return newHTML
 }
-
 
 function inputTemplate(){
   return '<div id="enterText"><form><input type="text" id="danmakuTextBox" class="text" placeholder="Your danmaku"></p><button id="enter">Enter</button><button id="demo">Play Demo</button></form></div>';
