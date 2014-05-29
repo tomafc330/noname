@@ -4,15 +4,15 @@
 #danmakuPlayer{
   position: absolute;
   top:10%;
-  left:50%;
+  /*left:50%;*/
   height:500px;
-  width:1000px;
-  margin-left: -500px;
+  width:100%;
+  /*margin-left: -500px;*/
   /*border: 0px solid black;*/
   /*background: gray;*/
   /*margin: 60px auto;*/
   overflow: hidden;
-  z-index:10000001; 
+  z-index:10000000001; 
   pointer-events:none;
 }
 
@@ -36,7 +36,7 @@
   border-radius: 1.6em;
   margin:0.1em; 
   background-color: #ffffff;
-  z-index: 10000001;
+  z-index: 10000000001;
   margin-right: 20px;
 }
 
@@ -64,7 +64,7 @@
   top:70%;
   left:50%;
   margin-left: -250px; 
-  z-index: 10000000;
+  z-index: 10000000002;
 }
 #enterText input{
 

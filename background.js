@@ -91,7 +91,7 @@ function prepareDanmaku(rawText){
 function danmakuSpeed(distance){
   //1152 = starting position for 1 letter 
   //6 = number of seconds of transition
-  var speed = 1156/5;
+  var speed = 1156/3;
   var newTime = distance/speed;
   // console.log("NEWTIME: ",newTime);
   return newTime;
