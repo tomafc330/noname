@@ -79,12 +79,16 @@ for (i=0;i<numOfShooters;i++){
 
 $("#danmakuTextBox").keydown(function(e){ 
   
-    if ($("#danmakuTextBox").val()!=""){
-      if (e.keyCode == 13){
+    if (e.keyCode == 13){
+      if ($("#danmakuTextBox").val()!=""){
         e.preventDefault();
         e.stopPropagation();
         saveNewDanmaku($("#danmakuTextBox").val());
         $("#danmakuTextBox").val("");
+      }
+      else{
+      	e.preventDefault();
+        e.stopPropagation();
       }
     }
 });
