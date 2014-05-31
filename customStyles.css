@@ -77,3 +77,14 @@
 #enterText input[type=text]:focus{
   outline:none;
 }
+
+/*Box used to measure width of content - does not display*/
+.textMeasurementFrame{
+    position: absolute;
+    visibility: hidden;
+    height: auto;
+    width: auto;
+    font-size: 1.5em;
+    font-family: arial;
+    font-weight: 300;
+}
