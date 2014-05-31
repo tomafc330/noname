@@ -25,12 +25,12 @@ for (i=0;i<numOfShooters;i++){
 };
 
 $("#danmakuTextBox").keydown(function(e){ 
-    var rawText=$("#danmakuTextBox").val();
-    if ($(rawText).val()!=""){
+  
+    if ($("#danmakuTextBox").val()!=""){
       if (e.keyCode == 13){
         e.preventDefault();
         e.stopPropagation();
-        saveNewDanmaku(rawText);
+        saveNewDanmaku($("#danmakuTextBox").val());
         $("#danmakuTextBox").val("");
       }
     }
