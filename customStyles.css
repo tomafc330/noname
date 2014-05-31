@@ -64,8 +64,17 @@
   top:70%;
   left:50%;
   margin-left: -250px; 
+  border-top-left-radius: 0.2em;
   z-index: 10000000002;
 }
+
+#enterText:before{
+  display:block;
+  width:30px;
+  height:30px;
+  width
+}
+
 #enterText input{
 
   width: 500px;
