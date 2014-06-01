@@ -29,9 +29,9 @@
   position: absolute;
   left:-500px;/*Testing*/
   display: inline-block;
-  -webkit-transition-timing-function: cubic-bezier(0.000, 0.505, 1.000, 0.585); 
-/*  min-height: 2em;
-  max-height: 2em;*/
+  /*-webkit-transition-timing-function: cubic-bezier(0.000, 0.505, 1.000, 0.585); */
+  min-height: 2em;
+  max-height: 2em;
   /*min-width: 200px;*/
   border-radius: 1.6em;
   margin:0.1em; 
@@ -61,11 +61,15 @@
 
 #enterText{
   position: fixed;
-  top:70%;
+  top:80%;
   left:50%;
   margin-left: -250px; 
   border-top-left-radius: 0.2em;
   z-index: 10000000002;
+}
+
+#enterText form{
+  float:left;
 }
 
 #enterText input{
@@ -86,6 +90,14 @@
   color:white;
   background:rgb(153,237,46);
   width:210px !important;
+}
+
+.dmac_info{
+  float: left;
+  padding: 1em;
+  background: gold;
+  border-radius: 2.5em;
+  margin-left: 20px;
 }
 
 /* IMPORTANT Box used to measure width of content - does not display*/

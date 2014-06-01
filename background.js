@@ -13,8 +13,6 @@ var NumOfDanmaku=0;
 if(youtubeID != undefined){
   $("html").append(createStage(numOfShooters));
   $("html").append(inputTemplate());
-  $(".video-extras-likes-dislikes").prepend("<span id='danmaku-count'>弹幕数:</span>");//Danmaku Count
-  $('#danmakuTextBox').drags();
   $(document).unbind("keypress.key13");
 }
 var playerWidth = $("#danmakuPlayer").width();
@@ -31,19 +29,38 @@ for (i=0;i<numOfShooters;i++){
 *
 */
 
-var inputBox = $('#danmakuTextBox');
+$('#enterText').drags();
+
+var dMisHidden = 1;
+$('#closeDamaku').on('click',function(){
+  numOfShooters = 0;
+  var shooters = $('.shooters').toArray();
+  $.each(shooters,function(i,value){
+    shooters[i].remove();
+    numOfShooters --;
+  });
+  if(dMisHidden){
+    $('#closeDamaku').html('Show Dmac');
+    $('#closeDamaku').css('background','green');
+    dMisHidden--;
+  } else {
+    $('#closeDamaku').html('Hide Dmac');
+    dMisHidden++;
+  }
+});
+
 var inputIsOpen = 1;
-inputBox.dblclick(function() {
+$('#danmakuTextBox').dblclick(function() {
   toggleInputBox();
 });
 
 function toggleInputBox(){
-  inputBox.toggleClass('smallTextBox');
+  $('#danmakuTextBox').toggleClass('smallTextBox');
   if(inputIsOpen){
-    inputBox.val('What do you think?');
+    $('#danmakuTextBox').val('What do you think?');
     inputIsOpen --;
   } else {
-    inputBox.val('');
+    $('#danmakuTextBox').val('');
     inputIsOpen ++;
   }
 }
@@ -53,41 +70,50 @@ function toggleInputBox(){
 * textbox states
 *
 */
-
+$(window).keydown(function(){
+  console.log('typing');
+  $("#danmakuTextBox").focus();
+});
 $("#danmakuTextBox").keydown(function(e){ 
   if (e.keyCode == 13){
     if ($("#danmakuTextBox").val()!=""){
         e.preventDefault();
         e.stopPropagation();
         saveNewDanmaku($("#danmakuTextBox").val());
-        console.log('ENTERING AND SAVED');
         $("#danmakuTextBox").val("");
       }
       else{
         e.preventDefault();
         e.stopPropagation();
       }
-    }
-  else {
-
+    } else {
     if(!inputIsOpen){
       toggleInputBox();
+      console.log('Texting');
     }
   }
 });
 
 thisvideo.child('NumOfDanmaku').once('value', function(snapshot) {
-    console.log('NO DANMU',snapshot.val());
-    if (snapshot.val() === 0){
+    if (snapshot.val() === null){
+      $('#damakuCount').html('0 DMac');
+      var pT = prepareDanmaku('Do not be shy. Be the first to create a danmaku')
+      createNewDanmaku(pT.cleanText,pT.contentWidth);
+      console.log('WTF AHHAA');
       thisvideo.child('NumOfDanmaku').set(0);
-      var prepareText = prepareDanmaku('Don\'t be sky. Be the first to create a danmaku')
-      createNewDanmaku(prepareText.text,prepareText.width);
+      return;
     } 
+    if(snapshot.val() == 0){
+      var pT = prepareDanmaku('LOL WTF')
+      createNewDanmaku(pT.cleanText,pT.contentWidth);
+      console.log('Be ther first to write something');
+    }
+    $('#damakuCount').html(snapshot.val()+' DMac');
 });
 
 thisvideo.on('child_added', function(snapshot) {
   var DMData = snapshot.val();
-  console.log('NEW DANMU');
+  // console.log('NEW DANMU');
   if (DMData.text != undefined){
     createNewDanmakuWithTime(DMData.text,DMData.time,DMData.width);
   }
@@ -103,11 +129,11 @@ function saveNewDanmaku(rawText){
                   width:DMPrepared.contentWidth,
                   creationTime: currentTime
                 });
-  console.log('SAVED');
+  // console.log('SAVED');
 
   thisvideo.child('NumOfDanmaku').transaction(function(current_value) {
-      new_value = current_value + 1
-      document.getElementById("danmaku-count").innerHTML = '弹幕数:'+ new_value;
+      new_value = current_value + 1;
+      $('#damakuCount').html(new_value+' DMax');
       return new_value;
   });
 }
@@ -131,18 +157,33 @@ function createNewDanmaku(DMText,DMContentWidth){
 
   var startingPosition = playerWidth+20;
   var travelDistance = startingPosition+DMContentWidth;
-  console.log('CREATED');
+  // console.log('CREATED');
   for (var i = 0 ; i < numOfShooters ; i++ ){
       if (position[i]==true){
         position[i]=false;
         var newid="dmnum"+dmnum;
         $("div#barrel_"+i).append(templateD(newid,i,DMText,startingPosition,DMContentWidth));
+        // var objectToMove = $("#"+newid);
+        // TweenLite.to(objectToMove, 3, {left:'-1000px',onComplete:function(){
+        //     console.log('created');
+        //   }
+        // });
         setTimeout(function(){
-          $("#"+newid).css('-webkit-transition','all '+danmakuSpeed(travelDistance)*1000+'ms cubic-bezier(0.000, 0.505, 1.000, 0.585)');
-          $("#"+newid).css('-webkit-transform','translate(-'+(travelDistance)+'px)');
-        },10);  
+          $("#"+newid).css({
+            '-webkit-transition':'all '+danmakuSpeed(travelDistance)*1000+'ms cubic-bezier(0.000, 0.505, 1.000, 0.585)',
+            '-moz-transition':'all '+danmakuSpeed(travelDistance)*1000+'ms cubic-bezier(0.000, 0.505, 1.000, 0.585)',
+            '-o-transition':'all '+danmakuSpeed(travelDistance)*1000+'ms cubic-bezier(0.000, 0.505, 1.000, 0.585)',
+            'transition:':'all '+danmakuSpeed(travelDistance)*1000+'ms cubic-bezier(0.000, 0.505, 1.000, 0.585)'
+          });
+          $("#"+newid).css({
+            '-webkit-transform':'translate(-'+(travelDistance)+'px)',
+            '-moz-transform':'translate(-'+(travelDistance)+'px)',
+            '-o-transform':'translate(-'+(travelDistance)+'px)',
+            'transform':'translate(-'+(travelDistance)+'px)'
+          });
+        },100);  
                 
-        $("#"+newid).one("transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd", function(e){
+        $("#"+newid).on("transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd", function(e){
           $("#"+newid).remove()
         });
         setTimeout(function(){
@@ -166,7 +207,7 @@ function prepareDanmaku(rawText){
     contentWidth : contentWidth,
     cleanText : cleanedText
   };
-  console.log('PREPARED');
+  // console.log('PREPARED');
   return preparedDictionary
 }
 
@@ -211,8 +252,12 @@ function templateD(newid,count,cleanContent,startingPosition,contentWidth){
   return newHTML
 }
 
-function inputTemplate(){
+function totalDMTemplate(totalDM){
   return '<div id="enterText"><form><input type="text" id="danmakuTextBox" placeholder="Your danmaku" autocomplete="off"></form></div>';
+}
+
+function inputTemplate(){
+  return '<div id="enterText"><form><input type="text" id="danmakuTextBox" placeholder="Your danmaku" autocomplete="off"></form><span id="damakuCount" class="dmac_info">DMac Count</span><span class="dmac_info" id="closeDamaku">Hide DMac</span></div>';
 }
 
 

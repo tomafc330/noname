@@ -41,7 +41,7 @@
             } else {
                 $(this).removeClass('active-handle').parent().removeClass('draggable');
             }
-            $el.css('cursor', 'text');
+            $el.css('cursor', 'pointer');
             clearTimeout(pressTimer)
             // Clear timeout
             return false;
