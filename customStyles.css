@@ -2,7 +2,7 @@
 
 
 #danmakuPlayer{
-  position: absolute;
+  position: fixed;
   top:10%;
   /*left:50%;*/
   height:500px;
@@ -60,7 +60,7 @@
 }
 
 #enterText{
-  position: absolute;
+  position: fixed;
   top:70%;
   left:50%;
   margin-left: -250px; 
@@ -68,26 +68,27 @@
   z-index: 10000000002;
 }
 
-#enterText:before{
-  display:block;
-  width:30px;
-  height:30px;
-  width
-}
-
 #enterText input{
-
   width: 500px;
-  border: 0.5em solid rgb(153,237,46);
+  border: 0.3em solid rgb(153,237,46);
   border-radius: 2.5em;
-  padding: 15px;
+  padding: 0.5em;
+  font-size: 1.5em;
+  font-family: arial;
+  font-weight: 300;
 }
 
 #enterText input[type=text]:focus{
   outline:none;
 }
 
-/*Box used to measure width of content - does not display*/
+.smallTextBox{
+  color:white;
+  background:rgb(153,237,46);
+  width:210px !important;
+}
+
+/* IMPORTANT Box used to measure width of content - does not display*/
 .textMeasurementFrame{
     position: absolute;
     visibility: hidden;

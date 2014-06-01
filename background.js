@@ -1,56 +1,6 @@
 //The code that is fired upon page load
 //to check your plugin js is working uncomment the next line.
 
-//jquery dragging.
-(function($) {
-    var pressTimer;
-    $.fn.drags = function(opt) {
-
-        opt = $.extend({handle:"",cursor:"move"}, opt);
-
-        if(opt.handle === "") {
-            var $el = this;
-        } else {
-            var $el = this.find(opt.handle);
-        }
-
-        return $el.on("mousedown", function(e) {
-          pressTimer = window.setTimeout(function() {
-            $el.css('cursor', opt.cursor)
-            if(opt.handle === "") {
-                var $drag = $(this).addClass('draggable');
-            } else {
-                var $drag = $(this).addClass('active-handle').parent().addClass('draggable');
-            }
-            var z_idx = $drag.css('z-index'),
-                drg_h = $drag.outerHeight(),
-                drg_w = $drag.outerWidth(),
-                pos_y = $drag.offset().top + drg_h - e.pageY,
-                pos_x = $drag.offset().left + drg_w - e.pageX;
-            $drag.css('z-index', 1000).parents().on("mousemove", function(e) {
-                $('.draggable').offset({
-                    top:e.pageY + pos_y - drg_h,
-                    left:e.pageX + pos_x - drg_w
-                }).on("mouseup", function() {
-                    $(this).removeClass('draggable').css('z-index', z_idx);
-                });
-            });
-            e.preventDefault(); // disable selection
-          },200);
-        }).on("mouseup", function() {
-            if(opt.handle === "") {
-                $(this).removeClass('draggable');
-            } else {
-                $(this).removeClass('active-handle').parent().removeClass('draggable');
-            }
-            clearTimeout(pressTimer)
-            // Clear timeout
-            return false;
-        });
-
-    }
-})(jQuery);
-
 var numOfShooters = 3;
 
 var dmnum = 1;
@@ -60,33 +10,70 @@ var youtubeID = $(".html5-main-video").attr("data-youtube-id");
 var thisvideo = youtube.child(youtubeID);
 var NumOfDanmaku=0;
 
+var inputBox = $('#danmakuTextBox');
+
 if(youtubeID != undefined){
   $("html").append(createStage(numOfShooters));
   $("html").append(inputTemplate());
   $(".video-extras-likes-dislikes").prepend("<span id='danmaku-count'>弹幕数:</span>");//Danmaku Count
-  $('#danmakuTextBox').drags();
+  inputBox.drags();
   $(document).unbind("keypress.key13");
 }
 var playerWidth = $("#danmakuPlayer").width();
 // $("div#player").css('position','relative');
-
-// createDemo();
 
 var position = {};
 for (i=0;i<numOfShooters;i++){
   position[i] = true;
 };
 
-$("#danmakuTextBox").keydown(function(e){ 
-  
-    if ($("#danmakuTextBox").val()!=""){
-      if (e.keyCode == 13){
+/*
+*
+* textbox states
+*
+*/
+
+var inputIsOpen = 1;
+inputBox.dblclick(function() {
+  toggleInputBox();
+});
+
+function toggleInputBox(){
+  inputBox.toggleClass('smallTextBox');
+  if(inputIsOpen){
+    inputBox.val('What do you think?');
+    inputIsOpen --;
+  } else {
+    inputBox.val('');
+    inputIsOpen ++;
+  }
+}
+
+/*
+*
+* textbox states
+*
+*/
+
+inputBox.keydown(function(e){ 
+  if (e.keyCode == 13){
+    if (inputBox.val()!=""){
         e.preventDefault();
         e.stopPropagation();
-        saveNewDanmaku($("#danmakuTextBox").val());
-        $("#danmakuTextBox").val("");
+        saveNewDanmaku(inputBox.val());
+        console.log('ENTERING AND SAVED');
+        inputBox.val("");
+      }
+      else{
+        e.preventDefault();
+        e.stopPropagation();
       }
     }
+  else {
+    if(!inputIsOpen){
+      toggleInputBox();
+    }
+  }
 });
 
 thisvideo.child('NumOfDanmaku').once('value', function(snapshot) {
@@ -225,7 +212,7 @@ function templateD(newid,count,cleanContent,startingPosition,contentWidth){
 }
 
 function inputTemplate(){
-  return '<div id="enterText"><form><input type="text" id="danmakuTextBox" class="text" placeholder="Your danmaku"></p></form></div>';
+  return '<div id="enterText"><form><input type="text" id="danmakuTextBox" placeholder="Your danmaku" autocomplete="off"></form></div>';
 }
 
 
