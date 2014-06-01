@@ -30,8 +30,8 @@
   left:-500px;/*Testing*/
   display: inline-block;
   -webkit-transition-timing-function: cubic-bezier(0.000, 0.505, 1.000, 0.585); 
-  min-height: 2em;
-  max-height: 2em;
+/*  min-height: 2em;
+  max-height: 2em;*/
   /*min-width: 200px;*/
   border-radius: 1.6em;
   margin:0.1em; 

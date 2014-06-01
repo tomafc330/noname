@@ -10,13 +10,11 @@ var youtubeID = $(".html5-main-video").attr("data-youtube-id");
 var thisvideo = youtube.child(youtubeID);
 var NumOfDanmaku=0;
 
-var inputBox = $('#danmakuTextBox');
-
 if(youtubeID != undefined){
   $("html").append(createStage(numOfShooters));
   $("html").append(inputTemplate());
   $(".video-extras-likes-dislikes").prepend("<span id='danmaku-count'>弹幕数:</span>");//Danmaku Count
-  inputBox.drags();
+  $('#danmakuTextBox').drags();
   $(document).unbind("keypress.key13");
 }
 var playerWidth = $("#danmakuPlayer").width();
@@ -33,6 +31,7 @@ for (i=0;i<numOfShooters;i++){
 *
 */
 
+var inputBox = $('#danmakuTextBox');
 var inputIsOpen = 1;
 inputBox.dblclick(function() {
   toggleInputBox();
@@ -55,14 +54,14 @@ function toggleInputBox(){
 *
 */
 
-inputBox.keydown(function(e){ 
+$("#danmakuTextBox").keydown(function(e){ 
   if (e.keyCode == 13){
-    if (inputBox.val()!=""){
+    if ($("#danmakuTextBox").val()!=""){
         e.preventDefault();
         e.stopPropagation();
-        saveNewDanmaku(inputBox.val());
+        saveNewDanmaku($("#danmakuTextBox").val());
         console.log('ENTERING AND SAVED');
-        inputBox.val("");
+        $("#danmakuTextBox").val("");
       }
       else{
         e.preventDefault();
@@ -70,6 +69,7 @@ inputBox.keydown(function(e){
       }
     }
   else {
+
     if(!inputIsOpen){
       toggleInputBox();
     }

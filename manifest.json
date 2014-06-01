@@ -7,7 +7,7 @@
   "content_security_policy": "script-src 'self' https://*.firebaseio.com; object-src 'self'",
   "content_scripts": [
     {
-      "js": [ "jquery.min.js", "firebase.js", "firebase-simple-login.js", "draggable.js","background.js"],
+      "js": [ "jquery.min.js", "firebase.js", "firebase-simple-login.js", "greensock.min.js", "draggable.js","background.js"],
       "css": ["customStyles.css"],
       "matches": [ "http://www.youtube.com/*","https://www.youtube.com/*"]
     }
