@@ -130,7 +130,7 @@ function saveNewDanmaku(rawText){
 
 function createNewDanmakuWithTime(DMText,DMStartTime,DMContentWidth){
   function myhandler(){
-    if ((Math.abs($(".video-stream.html5-main-video")[0].currentTime - DMStartTime)<0.2) && (document.URL.indexOf($(".html5-main-video").attr("data-youtube-id")) > -1)) {
+    if ((Math.abs($(".video-stream.html5-main-video")[0].currentTime - DMStartTime)<0.3) && (document.URL.indexOf($(".html5-main-video").attr("data-youtube-id")) > -1)) {
         createNewDanmaku(DMText,DMContentWidth);
         $(".video-stream.html5-main-video")[0].removeEventListener('timeupdate',myhandler,false);
     }
@@ -144,7 +144,7 @@ function createNewDanmakuWithTime(DMText,DMStartTime,DMContentWidth){
 
 function createNewDanmaku(DMText,DMContentWidth){
 
-  var startingPosition = playerWidth+20;
+  var startingPosition = playerWidth-200;
   var travelDistance = startingPosition+DMContentWidth;
 
   for (var i = 0 ; i < numOfShooters ; i++ ){
