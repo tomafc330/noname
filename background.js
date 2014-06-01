@@ -1,7 +1,3 @@
-//The code that is fired upon page load
-//to check your plugin js is working uncomment the next line.
-
-//jquery dragging.
 (function($) {
     var pressTimer;
     $.fn.drags = function(opt) {
@@ -107,7 +103,7 @@ thisvideo.child('NumOfDanmaku').once('value', function(snapshot) {
 thisvideo.on('child_added', function(snapshot) {
   var DMData = snapshot.val();
   console.log('NEW DANMU');
-  if (DMData.text != undefined){
+  if (DMData.text !== undefined){
     createNewDanmakuWithTime(DMData.text,DMData.time,DMData.width);
   }
 });
@@ -150,25 +146,30 @@ function createNewDanmaku(DMText,DMContentWidth){
 
   var startingPosition = playerWidth+20;
   var travelDistance = startingPosition+DMContentWidth;
-  console.log('CREATED');
+
   for (var i = 0 ; i < numOfShooters ; i++ ){
       if (position[i]==true){
         position[i]=false;
         var newid="dmnum"+dmnum;
         $("div#barrel_"+i).append(templateD(newid,i,DMText,startingPosition,DMContentWidth));
+        // setTimeout(function(){
+        //   $("#"+newid).css('-webkit-transition','all '+danmakuSpeed(travelDistance)*1000+'ms cubic-bezier(0.000, 0.505, 1.000, 0.585)');
+        //   $("#"+newid).css('-webkit-transform','translate(-'+(travelDistance)+'px)');
+        // },10);  
         setTimeout(function(){
           $("#"+newid).css('-webkit-transition','all '+danmakuSpeed(travelDistance)*1000+'ms cubic-bezier(0.000, 0.505, 1.000, 0.585)');
-          $("#"+newid).css('-webkit-transform','translate(-'+(travelDistance)+'px)');
-        },10);  
-                
+          $("#"+newid).css('-webkit-transform','translate(-'+(travelDistance)+'px,0px)');
+        },10);
+        // $("#"+newid).animate({left:"-"+$("#"+newid).css("width")},5000,"linear");
         $("#"+newid).one("transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd", function(e){
           $("#"+newid).remove()
+          // console.log('finished',e);
         });
         setTimeout(function(){
           position[i]=true;
         },(danmakuSpeed(DMContentWidth+150)*1000));
         dmnum++;
-          break;
+        break;
       }
     } 
 }
@@ -178,6 +179,12 @@ function createNewDanmaku(DMText,DMContentWidth){
 * - 清洁弹幕
 * - 计算长短
 */
+
+// function moveDanmaku(newid){
+// 	$("#"+newid).css('-webkit-transition','all '+danmakuSpeed(travelDistance)*1000+'ms cubic-bezier(0.000, 0.505, 1.000, 0.585)');
+//     $("#"+newid).css('-webkit-transform','translate(-'+(travelDistance)+'px,0px)');
+// }
+
 function prepareDanmaku(rawText){
   var cleanedText = rawText.replace(/&/g, "&amp;").replace(/>/g, "&gt;").replace(/</g, "&lt;").replace(/"/g, "&quot;").replace(/ /g,"&nbsp;");//替换 空的，特别符号 成为html
   var contentWidth = measureText(cleanedText);
@@ -195,6 +202,8 @@ function measureText(content){
   var html = '<div class=\"textMeasurementFrame frame_'+measureFrameCount+'\">'+content+'</div>';
   $('html').prepend(html);
   var width = $('.textMeasurementFrame.frame_'+measureFrameCount).width();
+  // console.log('WIDTH','.textMeasurementFrame frame_'+measureFrameCount);
+  console.log('COUNT',width);
   $('.textMeasurementFrame.frame_'+measureFrameCount).remove();
   measureFrameCount++;
   return width+70;
@@ -207,6 +216,7 @@ function danmakuSpeed(distance){
   //6 = number of seconds of transition
   var speed = 1156/3;
   var newTime = distance/speed;
+  // console.log("NEWTIME: ",newTime);
   return newTime;
 }
 
@@ -214,10 +224,12 @@ function createStage(numOfShooters){
   var shooterTemplate='';
   for (var i = 0; i < numOfShooters; i++){
     shooterTemplate += '<div class=\"shooters\" id=\"barrel_'+i+'\"></div>'
+      // console.log('creating shooters');
   }
   var stageTemplate = '<div id="danmakuPlayer" id="screen">';
   stageTemplate += shooterTemplate;
   stageTemplate += '</div>';
+  // console.log('SHOOTER CRAETED: ',stageTemplate);
   return stageTemplate;
 }
 
@@ -233,7 +245,6 @@ function templateD(newid,count,cleanContent,startingPosition,contentWidth){
 function inputTemplate(){
   return '<div id="enterText"><form><input type="text" id="danmakuTextBox" class="text" placeholder="Your danmaku"></p></form></div>';
 }
-
 
 
 
