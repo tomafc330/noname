@@ -95,8 +95,10 @@ $("#danmakuTextBox").keydown(function(e){
 
 thisvideo.child('NumOfDanmaku').once('value', function(snapshot) {
     console.log('NO DANMU',snapshot.val());
-    if (snapshot.val() === 0){
+    if (snapshot.val() === null){
       thisvideo.child('NumOfDanmaku').set(0);
+    }
+    if (snapshot.val() === 0){
       var prepareText = prepareDanmaku('Don\'t be sky. Be the first to create a danmaku')
       createNewDanmaku(prepareText.text,prepareText.width);
     } 
